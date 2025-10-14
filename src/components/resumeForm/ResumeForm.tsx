@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import StringInput from "../stringInput/StringInput";
 import type { ResumeData } from "../../types/resumeDataType";
 import { downloadResumeFile, generateResume } from "../../api/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const experienceSchema = Yup.object().shape({
   company: Yup.string().required(),
@@ -61,7 +61,8 @@ const ResumeForm = () => {
         a.href = url;
         a.download = "resume.docx";
         a.click()
-        window.URL.revokeObjectURL(url)
+        window.URL.revokeObjectURL(url);
+        setFileName(null)
     }
   }
   return (
