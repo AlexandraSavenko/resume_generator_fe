@@ -1,0 +1,5 @@
+.wrap{
+     padding-top: 80px;
+     padding-bottom: 40px;
+     background-image: linear-gradient(to right, var(--gray-light), var(--button-hover));
+}

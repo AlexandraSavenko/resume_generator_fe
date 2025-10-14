@@ -7,7 +7,7 @@ children: React.ReactNode
 
 const Layout: React.FC<Props> = ({children}) => {
   return (
-    <div className={css.wrap}>
+    <div className={css.layoutWrap}>
         <Header/>
       {children}
     </div>
