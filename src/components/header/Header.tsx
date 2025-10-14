@@ -7,7 +7,7 @@ const Header = () => {
     <div className={`${css.headerWrap} container`}>
       <nav>
         <NavLink className={({ isActive }) => clsx(isActive && css.active, css.link) } to={"/"}>Home</NavLink>
-        <NavLink className={({ isActive }) => clsx(isActive && css.active, css.link)} to={"/catalog"}>Catalog</NavLink>
+        <NavLink className={({ isActive }) => clsx(isActive && css.active, css.link)} to={"/resume"}>Create your resume</NavLink>
       </nav>
     </div>
   )
