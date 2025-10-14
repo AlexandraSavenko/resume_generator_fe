@@ -1,73 +1,62 @@
-# React + TypeScript + Vite
+# 🧩 Resume Generator (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple **React + TypeScript** web app that allows users to generate and download professional `.docx` resumes.  
+The app provides a clean form interface for entering personal details, skills, and work experience, and connects to a backend service that produces a downloadable document.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+- 📝 Fill in your personal details, skills, and work experience  
+- ➕ Dynamically add or remove skills and job entries  
+- ✅ Real-time validation powered by **Yup**  
+- 📄 Generate a `.docx` resume file via backend API  
+- 💾 Download your resume instantly  
+- 🧭 Navigation with **React Router DOM** (Home & Resume pages)
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+---
 
-## Expanding the ESLint configuration
+## 🧠 How It Works
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. On the **Home page**, users can access the Resume Generator.  
+2. On the **Resume page**, users fill out the form with:
+   - Name, email, city, and country  
+   - Skills (multiple entries supported)  
+   - Work experience (company, position, years)
+3. Upon clicking **Generate Resume**, the data is sent to the backend via **Axios**.  
+4. The backend returns a `.docx` file, which can then be downloaded with a single click.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🛠️ Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+| Category | Technology |
+|-----------|-------------|
+| Frontend Framework | **React + TypeScript** |
+| Forms | **Formik** |
+| Validation | **Yup** |
+| Routing | **React Router DOM** |
+| HTTP Client | **Axios** |
+| Utility | **clsx** |
+| Build Tool | **Vite** |
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📸 Screenshots
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+*(Add screenshots here once the UI is finalized)*  
+Example:
+<p>&nbsp;<img align="center" src="/Screenshot.png" alt="example screenshot" /></p>
+
+The app will be available at:
+👉 https://resume-generator-fe.vercel.app
+
+Or you can set it up locally: 
+## 📂 Project Setup
+
+```bash
+# install dependencies
+npm install
+
+# run the development server
+npm run dev

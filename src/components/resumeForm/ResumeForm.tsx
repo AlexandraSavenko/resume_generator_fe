@@ -164,22 +164,21 @@ const ResumeForm = () => {
                           name={`experience[${index}].company`}
                           placeholder="Company"
                         />
-                        <ErrorMessage name={`experience`} component="span" />
+                        <ErrorMessage name={`experience[${index}].company`} component="span" />
 
                         <Field
                           className={css.forminput}
                           name={`experience[${index}].position`}
                           placeholder="Position"
                         />
-                        <ErrorMessage name={`experience`} component="span" />
+                        <ErrorMessage name={`experience[${index}].position`} component="span" />
 
                         <Field
                           className={css.forminput}
                           name={`experience[${index}].years`}
                           placeholder="Years you've worked"
                         />
-                        <ErrorMessage name={`experience`} component="span" />
-
+                        <ErrorMessage name={`experience[${index}].years`} component="span" />
                         <button
                           className={css.delBtn}
                           type="button"
