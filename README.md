@@ -53,10 +53,28 @@ The app will be available at:
 
 Or you can set it up locally: 
 ## 📂 Project Setup
+To run the project on your local machine, follow these steps:
 
+1. **Clone the repository**  
+```bash
+git https://github.com/AlexandraSavenko/resume_generator_fe.git
+cd resume_generator
 ```bash
 # install dependencies
 npm install
+# or with yarn:
 
-# run the development server
+yarn
+
+
+# create .env file and add the like to it: 
+https://resume-generator-be.onrender.com
+
+# Start the server
+
 npm run dev
+
+
+# or with yarn:
+
+yarn dev
