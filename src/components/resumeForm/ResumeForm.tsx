@@ -1,4 +1,11 @@
-import { Field, FieldArray, Formik, Form, type FormikHelpers } from "formik";
+import {
+  Field,
+  FieldArray,
+  Formik,
+  Form,
+  type FormikHelpers,
+  ErrorMessage,
+} from "formik";
 import css from "./ResumeForm.module.css";
 import * as Yup from "yup";
 import StringInput from "../stringInput/StringInput";
@@ -8,9 +15,9 @@ import { useState } from "react";
 import clsx from "clsx";
 
 const experienceSchema = Yup.object().shape({
-  company: Yup.string().required(),
-  position: Yup.string().required(),
-  years: Yup.string().required(),
+  company: Yup.string().required("This fiels shouldn't be empty"),
+  position: Yup.string().required("This fiels shouldn't be empty"),
+  years: Yup.string().required("This fiels shouldn't be empty"),
 });
 export const FormSchema = Yup.object().shape({
   name: Yup.string().min(2).required("Please enter your name"),
@@ -19,10 +26,14 @@ export const FormSchema = Yup.object().shape({
     .required("Please enter your email"),
   city: Yup.string().min(2).required("Please enter your location"),
   country: Yup.string().min(4).required("Please enter your location"),
-  skills: Yup.array().of(Yup.string()),
+  skills: Yup.array()
+    .of(Yup.string())
+    .min(2, "Please add at least two skills")
+    .required("Please add at least two skills"),
   experience: Yup.array()
     .of(experienceSchema)
-    .min(1, "Please give at one working experience."),
+    .min(1, "Please give at least one working experience.")
+    .required("Please add your latest workplace"),
 });
 
 const initialValues: ResumeData = {
@@ -69,13 +80,15 @@ const ResumeForm = () => {
     <div className={css.formWrap}>
       <h2>Your dream job is waiting for you!</h2>
       {fileName ? (
-        <p className={css.message}>Your resume is ready. Click the button to download it in docx</p>
+        <p className={css.message}>
+          Your resume is ready. Click the button to download it in docx
+        </p>
       ) : (
         <p className={css.message}>Fill in the form and generate your resume</p>
       )}
-      
+
       <Formik
-        // validationSchema={FormSchema}
+        validationSchema={FormSchema}
         initialValues={initialValues}
         onSubmit={handleSubmit}
       >
@@ -98,16 +111,15 @@ const ResumeForm = () => {
               {({ push, remove }) => (
                 <div>
                   <div className={css.label}>
-                   <p>Skills: </p> 
-                   <button
-                    className={css.addBtn}
-                    type="button"
-                    onClick={() => push("")}
-                  >
-                    Add skill
-                  </button>
+                    <p>Skills: </p>
+                    <button
+                      className={css.addBtn}
+                      type="button"
+                      onClick={() => push("")}
+                    >
+                      Add skill
+                    </button>
                   </div>
-                  
 
                   <ul className={css.list}>
                     {values.skills.map((_, index) => (
@@ -116,6 +128,7 @@ const ResumeForm = () => {
                           className={css.forminput}
                           name={`skills[${index}]`}
                         />
+                        <ErrorMessage name={`skills`} component="span" />
                         <button
                           className={css.delBtn}
                           type="button"
@@ -126,7 +139,6 @@ const ResumeForm = () => {
                       </li>
                     ))}
                   </ul>
-                  
                 </div>
               )}
             </FieldArray>
@@ -136,14 +148,14 @@ const ResumeForm = () => {
                   <div className={css.label}>
                     <p>Experience: </p>
                     <button
-                    className={css.addBtn}
-                    type="button"
-                    onClick={() => push("")}
-                  >
-                    Add experience
-                  </button>
+                      className={css.addBtn}
+                      type="button"
+                      onClick={() => push("")}
+                    >
+                      Add experience
+                    </button>
                   </div>
-                  
+
                   <ul className={css.list}>
                     {values.experience.map((_, index) => (
                       <li key={index}>
@@ -152,16 +164,22 @@ const ResumeForm = () => {
                           name={`experience[${index}].company`}
                           placeholder="Company"
                         />
+                        <ErrorMessage name={`experience`} component="span" />
+
                         <Field
                           className={css.forminput}
                           name={`experience[${index}].position`}
                           placeholder="Position"
                         />
+                        <ErrorMessage name={`experience`} component="span" />
+
                         <Field
                           className={css.forminput}
                           name={`experience[${index}].years`}
-                          placeholder="Years you've worked there"
+                          placeholder="Years you've worked"
                         />
+                        <ErrorMessage name={`experience`} component="span" />
+
                         <button
                           className={css.delBtn}
                           type="button"
@@ -172,26 +190,36 @@ const ResumeForm = () => {
                       </li>
                     ))}
                   </ul>
-                  
                 </div>
               )}
             </FieldArray>
-            <button className={css.sendBtn} type="submit">
+            <button
+              className={clsx(css.sendBtn, fileName && css.disabled)}
+              type="submit"
+            >
               Generate my resume
             </button>
-            
           </Form>
         )}
       </Formik>
       <div className={css.resultWrap}>
-        <button disabled={!fileName} className={clsx(css.downloadBtn, !fileName && css.disabled)} onClick={handleDownload}>Download</button>
+        <button
+          disabled={!fileName}
+          className={clsx(css.downloadBtn, !fileName && css.disabled)}
+          onClick={handleDownload}
+        >
+          Download
+        </button>
         {fileName ? (
-        <p className={css.message}>Your resume is ready. Click the button to download it in docx</p>
-      ) : (
-        <p className={css.message}>Fill in the form and generate your resume</p>
-      )}
+          <p className={css.message}>
+            Your resume is ready. Click the button to download it in docx
+          </p>
+        ) : (
+          <p className={css.message}>
+            Fill in the form and generate your resume
+          </p>
+        )}
       </div>
-      
     </div>
   );
 };
