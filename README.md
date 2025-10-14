@@ -46,7 +46,7 @@ The app provides a clean form interface for entering personal details, skills, a
 
 *(Add screenshots here once the UI is finalized)*  
 Example:
-<p>&nbsp;<img align="center" src="/Screenshot.png" alt="example screenshot" /></p>
+<p>&nbsp;<img src="/Screenshot.png" alt="example screenshot" /></p>
 
 The app will be available at:
 👉 https://resume-generator-fe.vercel.app
