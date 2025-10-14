@@ -8,6 +8,8 @@ import {
 import css from "./ResumeForm.module.css";
 import * as Yup from "yup";
 import StringInput from "../stringInput/StringInput";
+import type { ResumeData } from "../../types/resumeDataType";
+import { generateResume } from "../../api/api";
 
 const experienceSchema = Yup.object().shape({
   company: Yup.string().required(),
@@ -29,22 +31,9 @@ export const FormSchema = Yup.object().shape({
     .min(1, "Please give at one working experience."),
 });
 
-interface Experience {
-  company: string;
-  position: string;
-  years: string;
-}
 
-interface InitialValues {
-  name: string;
-  email: string;
-  city: string;
-  country: string;
-  skills: string[];
-  experience: Experience[];
-}
 
-const initialValues: InitialValues = {
+const initialValues: ResumeData = {
   name: "",
   email: "",
   city: "",
@@ -56,11 +45,11 @@ const initialValues: InitialValues = {
 };
 const ResumeForm = () => {
   const handleSubmit = (
-    values: InitialValues,
-    actions: FormikHelpers<InitialValues>
+    values: ResumeData,
+    actions: FormikHelpers<ResumeData>
   ): void => {
     console.log(values);
-   
+generateResume(values)
   };
   return (
     <div className={css.wrap}>
@@ -116,7 +105,7 @@ const ResumeForm = () => {
               )}
             </FieldArray>
             <button className={css.sendBtn} type="submit">
-              Send
+              Generate my resume
             </button>
           </Form>
         )}
