@@ -1,0 +1,110 @@
+.formWrap {
+  border: 1px solid var(--gray-light);
+  border-radius: 10px;
+  padding: 32px;
+}
+
+.formWrap h2 {
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--main);
+}
+
+.message {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--main);
+  margin: 8px 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.label{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+}
+.list li{
+    border: 1px solid var(--gray-light);
+    border-radius: 12px;
+    padding: 12px;
+display: flex;
+flex-direction: column;
+gap: 16px;
+position: relative;
+margin-bottom: 8px;
+}
+
+.forminput {
+    border: none;
+  border-radius: 12px;
+  background: var(--inputs);
+  padding: 12px;
+  width: 200px;
+}
+
+.forminput:hover, .forminput:focus{
+    outline: none;
+}
+.forminput::placeholder {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--gray);
+}
+
+.disabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--gray-light);
+  pointer-events: none;
+}
+.sendBtn, .downloadBtn {
+  display: block;
+  border-radius: 12px;
+  padding: 12px 51px;
+  height: 44px;
+  background: var(--button);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--white);
+  margin: 0 auto;
+  transition: all 0.5s ease-in;
+}
+
+.sendBtn:hover, .downloadBtn:hover {
+  background: var(--button-hover);
+}
+
+.delBtn{
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
+
+.delBtn, .addBtn{
+  display: block;
+  border-radius: 12px;
+  padding: 14px;
+  background: var(--button);
+  color: var(--white);
+  transition: all 0.5s ease-in;
+
+}
+
+.delBtn:hover, .addBtn:hover{
+      background: var(--button-hover);
+
+}
+
+.resultWrap{
+  margin-top: 8px;
+  text-align: center;
+   border: 1px solid var(--gray-light);
+    border-radius: 12px;
+    padding: 12px;
+}

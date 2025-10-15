@@ -1,23 +1,24 @@
-import {
-  Field,
-  FieldArray,
-  Formik,
-  Form,
-  type FormikHelpers,
-  ErrorMessage,
-} from "formik";
+import { Formik, Form, type FormikHelpers } from "formik";
 import css from "./ResumeForm.module.css";
 import * as Yup from "yup";
 import StringInput from "../stringInput/StringInput";
-import type { ResumeData } from "../../types/resumeDataType";
+import type { ResumeData, ResumeFormData } from "../../types/resumeDataType";
 import { downloadResumeFile, generateResume } from "../../api/api";
 import { useState } from "react";
 import clsx from "clsx";
+import ExperienceFields from "../experienceFields/ExperienceFields";
+import EducationFields from "../educationFields/EducationFields";
+import SkillField from "../skillFiled/SkillField";
 
 const experienceSchema = Yup.object().shape({
   company: Yup.string().required("This fiels shouldn't be empty"),
   position: Yup.string().required("This fiels shouldn't be empty"),
   years: Yup.string().required("This fiels shouldn't be empty"),
+});
+
+const educationSchema = Yup.object().shape({
+  place: Yup.string(),
+  grYear: Yup.number().typeError("Must be a number"),
 });
 export const FormSchema = Yup.object().shape({
   name: Yup.string().min(2).required("Please enter your name"),
@@ -26,6 +27,7 @@ export const FormSchema = Yup.object().shape({
     .required("Please enter your email"),
   city: Yup.string().min(2).required("Please enter your location"),
   country: Yup.string().min(4).required("Please enter your location"),
+  description: Yup.string(),
   skills: Yup.array()
     .of(Yup.string())
     .min(2, "Please add at least two skills")
@@ -34,24 +36,35 @@ export const FormSchema = Yup.object().shape({
     .of(experienceSchema)
     .min(1, "Please give at least one working experience.")
     .required("Please add your latest workplace"),
+  education: Yup.array().of(educationSchema),
 });
 
-const initialValues: ResumeData = {
+const initialValues: ResumeFormData = {
   name: "",
   email: "",
   city: "",
   country: "",
+  description: "",
   skills: [""],
   experience: [{ company: "", position: "", years: "" }],
+  education: [{ place: "", grYear: "" }],
 };
 const ResumeForm = () => {
   const [fileName, setFileName] = useState<string | null>(null);
   const handleSubmit = async (
-    values: ResumeData,
-    actions: FormikHelpers<ResumeData>
+    values: ResumeFormData,
+    actions: FormikHelpers<ResumeFormData>
   ) => {
+
+    const formatted: ResumeData = {
+    ...values,
+    education: values.education.map(educ => ({
+      ...educ,
+      grYear: Number(educ.grYear)
+    }))
+  }
     try {
-      const res = await generateResume(values);
+      const res = await generateResume(formatted);
       if (res.status === 200) {
         setFileName(res.fileName);
         actions.resetForm();
@@ -106,92 +119,14 @@ const ResumeForm = () => {
               type="text"
               placeholder="Location: country *"
             />
-
-            <FieldArray name="skills">
-              {({ push, remove }) => (
-                <div>
-                  <div className={css.label}>
-                    <p>Skills: </p>
-                    <button
-                      className={css.addBtn}
-                      type="button"
-                      onClick={() => push("")}
-                    >
-                      Add skill
-                    </button>
-                  </div>
-
-                  <ul className={css.list}>
-                    {values.skills.map((_, index) => (
-                      <li key={index}>
-                        <Field
-                          className={css.forminput}
-                          name={`skills[${index}]`}
-                        />
-                        <ErrorMessage name={`skills`} component="span" />
-                        <button
-                          className={css.delBtn}
-                          type="button"
-                          onClick={() => remove(index)}
-                        >
-                          X
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </FieldArray>
-            <FieldArray name="experience">
-              {({ push, remove }) => (
-                <div>
-                  <div className={css.label}>
-                    <p>Experience: </p>
-                    <button
-                      className={css.addBtn}
-                      type="button"
-                      onClick={() => push("")}
-                    >
-                      Add experience
-                    </button>
-                  </div>
-
-                  <ul className={css.list}>
-                    {values.experience.map((_, index) => (
-                      <li key={index}>
-                        <Field
-                          className={css.forminput}
-                          name={`experience[${index}].company`}
-                          placeholder="Company"
-                        />
-                        <ErrorMessage name={`experience[${index}].company`} component="span" />
-
-                        <Field
-                          className={css.forminput}
-                          name={`experience[${index}].position`}
-                          placeholder="Position"
-                        />
-                        <ErrorMessage name={`experience[${index}].position`} component="span" />
-
-                        <Field
-                          className={css.forminput}
-                          name={`experience[${index}].years`}
-                          placeholder="Years you've worked"
-                        />
-                        <ErrorMessage name={`experience[${index}].years`} component="span" />
-                        <button
-                          className={css.delBtn}
-                          type="button"
-                          onClick={() => remove(index)}
-                        >
-                          X
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </FieldArray>
+            <StringInput
+              name="description"
+              type="textarea"
+              placeholder="Write something about yourself"
+            />
+            <SkillField values={values} />
+            <ExperienceFields values={values} />
+            <EducationFields values={values} />
             <button
               className={clsx(css.sendBtn, fileName && css.disabled)}
               type="submit"
