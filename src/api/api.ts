@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { ResumeData } from "../types/resumeDataType";
+import type { ResumeFormData } from "../types/resumeDataType";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL
@@ -7,7 +7,7 @@ const api = axios.create({
 )
 
 
-export const generateResume = async (userData: ResumeData) => {
+export const generateResume = async (userData: ResumeFormData) => {
 const res = await api.post("/resume", userData)
 return res.data;
 }

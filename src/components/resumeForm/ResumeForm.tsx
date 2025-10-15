@@ -2,7 +2,7 @@ import { Formik, Form, type FormikHelpers } from "formik";
 import css from "./ResumeForm.module.css";
 import * as Yup from "yup";
 import StringInput from "../stringInput/StringInput";
-import type { ResumeData, ResumeFormData } from "../../types/resumeDataType";
+import type { ResumeFormData } from "../../types/resumeDataType";
 import { downloadResumeFile, generateResume } from "../../api/api";
 import { useState } from "react";
 import clsx from "clsx";
@@ -57,15 +57,15 @@ const ResumeForm = () => {
     actions: FormikHelpers<ResumeFormData>
   ) => {
 
-    const formatted: ResumeData = {
-    ...values,
-    education: values.education.map(educ => ({
-      ...educ,
-      grYear: Number(educ.grYear)
-    }))
-  }
+  //   const formatted: ResumeData = {
+  //   ...values,
+  //   education: values.education.map(educ => ({
+  //     ...educ,
+  //     grYear: Number(educ.grYear)
+  //   }))
+  // }
     try {
-      const res = await generateResume(formatted);
+      const res = await generateResume(values);
       if (res.status === 200) {
         setFileName(res.fileName);
         actions.resetForm();
