@@ -8,6 +8,7 @@
   background: var(--inputs);
   padding: 12px;
   width: 300px;
+  resize: none;
 }
 .input:hover, .input:focus{
     outline: none;

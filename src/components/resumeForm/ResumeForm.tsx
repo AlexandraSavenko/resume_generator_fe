@@ -9,6 +9,7 @@ import clsx from "clsx";
 import ExperienceFields from "../experienceFields/ExperienceFields";
 import EducationFields from "../educationFields/EducationFields";
 import SkillField from "../skillFiled/SkillField";
+import TextareaInput from "../textareaInput/TextareaInput";
 
 const experienceSchema = Yup.object().shape({
   company: Yup.string().required("This fiels shouldn't be empty"),
@@ -119,7 +120,7 @@ const ResumeForm = () => {
               type="text"
               placeholder="Location: country *"
             />
-            <StringInput
+            <TextareaInput
               name="description"
               type="textarea"
               placeholder="Write something about yourself"

@@ -45,7 +45,7 @@ margin-bottom: 8px;
   border-radius: 12px;
   background: var(--inputs);
   padding: 12px;
-  width: 200px;
+  width: 300px;
 }
 
 .forminput:hover, .forminput:focus{
